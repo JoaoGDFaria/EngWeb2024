@@ -20,7 +20,7 @@ Este programa cria um servidor HTTP para lidar com solicitações de informaçõ
 Este script lê dados de um arquivo JSON contendo informações sobre cidades e suas conexões, e gera páginas HTML individuais para cada cidade. Funcionalidades principais:
 
 1. **Leitura de Dados JSON:** Lê o arquivo "cities.json" e carrega os dados.
-2. **Criação de Diretório "Cities":** Cria a diretoria "Cities" para armazenar arquivos HTML individuais para cada cidade.
+2. **Criação de Diretoria "Cities":** Cria a diretoria "Cities" para armazenar arquivos HTML individuais para cada cidade.
 3. **Extração de Informações das Cidades:** Extrai informações relevantes sobre cada cidade.
 4. **Geração de Páginas HTML:** Gera páginas HTML com informações detalhadas sobre cada cidade e suas conexões, armazenando-as no diretório "Cities".
 

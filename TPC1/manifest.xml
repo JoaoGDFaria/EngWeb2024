@@ -2,7 +2,7 @@
 
 <doc>
     <meta>
-        <title> TPC1: Exemplo</title>
+        <title> TPC1</title>
         <date> 2024-02-05 </date>
         <author>
             <id>a100553</id>
@@ -14,12 +14,11 @@
         </uc>
     </meta>
     <resumo>
-        <p>Primeiro paragrafo</p>
-        <p>Segundo paragrafo</p>
-        <p>Terceiro paragrafo com <url>link</url><texto>url embutido</texto></p>
+        <p>Neste TPC, vamos trabalhar com um conjunto de dados relativos às ruas da cidade de Braga. </p>
+        <p>Inicialmente, ter numa página HTML as diferentes ruas da cidade de Braga, sendo que através destas somos redirecionados para páginas específicas das mesmas.</p>
+        <p>Nessa página específica, teremos dados relativos à rua em questão, informação essa obtida através de ficheiros XML, de forma automática.</p>
     </resumo>
     <resultados>
-        <p>resultado 1</p>
-        <p>resultado 2</p>
+        <p>Foram obtidas páginas HTML com informações das ruas e imagens das mesmas</p>
     </resultados>
 </doc>

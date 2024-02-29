@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<doc>
+    <meta>
+        <title> TPC2</title>
+        <date> 2024-02-19 </date>
+        <author>
+            <id>a100553</id>
+            <nome>João Faria</nome>
+        </author>
+        <uc>
+            <sigla>EW2024</sigla>
+            <nome>Engenharia Web</nome>
+        </uc>
+    </meta>
+    <resumo>
+        <p>Neste TPC foi necessário, dado um ficheiro JSON com informações de cidades, criar páginas plain HTML que contenha a informação das mesmas.</p>
+    </resumo>
+    <resultados>
+        <p>Este programa cria um servidor HTTP para lidar com solicitações de informações sobre cidades. Ele trata do route das solicitações para obter informações específicas de uma cidade a partir de um servidor JSON. Funcionalidades principais:</p>
+        <p> - Criação de um servidor HTTP : Utiliza o módulo `http` para criar um servidor HTTP na porta 1902.</p>
+        <p> - Roteamento de Solicitações: Responde a solicitações de raiz ("/") com uma lista de hiperlinks para cada cidade. Para solicitações específicas de cidade, obtém detalhes dessa cidade a partir do servidor JSON.</p>
+        <p> - Integração com Script Python:  Solicita informações detalhadas sobre cidades ao script Python `script.py` para gerar páginas HTML correspondentes.</p>
+        <p> - script.py: Este script lê dados de um arquivo JSON contendo informações sobre cidades e suas conexões, e gera páginas HTML individuais para cada cidade. Funcionalidades principais: </p>
+        <p> - Leitura de Dados JSON: Lê o arquivo "cities.json" e carrega os dados.</p>
+        <p> - Criação de Diretoria "Cities": Cria a diretoria "Cities" para armazenar arquivos HTML individuais para cada cidade.</p>
+        <p> - Geração de Páginas HTML: Gera páginas HTML com informações detalhadas sobre cada cidade e suas conexões, armazenando-as no diretório "Cities".</p>
+    </resultados>
+</doc>
