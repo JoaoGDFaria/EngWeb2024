@@ -40,3 +40,6 @@ Este é um ficheiro Node.js que cria um servidor HTTP para fornecer informaçõe
 - O servidor escuta na porta 7777 e exibe uma mensagem no terminal indicando que está disponível.
 
 Este ficheiro é um exemplo de como criar um servidor web simples em *Node.js* e utilizar uma API REST para fornecer informações dinâmicas sobre filmes, atores e gêneros.
+
+## Desenvolvido por:
+- João Gomes Dias de Faria - a100553 - UMinho 2024
