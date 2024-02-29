@@ -7,6 +7,8 @@ var atores = {}
 var atoresToId = {}
 var idToAtores = {}
 var generos = {}
+var generosToId = {}
+var idToGeneros = {}
 
 http.createServer((req, res) => {
 
@@ -14,7 +16,7 @@ http.createServer((req, res) => {
 
     if (q.pathname == "/") {
         res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
-        res.write("<h1>Choose one option</h1>");
+        res.write("<h1>Escolhe uma opção</h1>");
         res.write("<ul>");
         res.write("<li><a href=http://localhost:7777/filmes>Filmes</a></li>");
         res.write("<li><a href=http://localhost:7777/atores>Atores</a></li>");
@@ -91,7 +93,6 @@ http.createServer((req, res) => {
             let id = q.pathname.substring(8);
             var nome = idToAtores[id];
             var filmes = atores[nome];
-            // Split the string into an array of strings by ;
             var filmesArray = filmes.split(';');
             res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
             res.write("<h2><b>" + nome + "</b></h2>");
@@ -101,6 +102,58 @@ http.createServer((req, res) => {
                 res.write('<li>' + filmesArray[i] + '</li>');
             }
             res.write("</ul>");
+            res.end();
+        } else if(q.pathname == "/generos"){
+            axios.get("http://localhost:3000/filmes")
+            .then(resp => {
+                var v = 0;
+                if(Object.keys(generos).length === 0){
+                    let lista = resp.data
+    
+                    for(elem in lista){
+                        var genresF = lista[elem].genres
+                        for(c in genresF){
+                            if(genresF[c] in generos){
+                                generos[genresF[c]] += "; " + lista[elem].title;
+                            }
+                            else{
+                                generos[genresF[c]] = lista[elem].title;
+                                generosToId[genresF[c]] = v;
+                                idToGeneros[v] = genresF[c];
+                                v++;
+                            }
+                        }
+                    }
+                }
+                res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+                res.write("<ul>");
+                for(i in generos){
+                    res.write('<li><a href=http://localhost:7777/generos/'+ generosToId[i] + '>' + i + '</a></li>');
+                }
+                res.write("</ul>");
+                res.end();
+            })
+            .catch(err => {
+                res.write("Erro: " + err);
+                res.end();
+            });
+        } else if(q.pathname.match(/\/generos\/(.+)/)){
+            let id = q.pathname.substring(9);
+            var nome = idToGeneros[id];
+            var filmes = generos[nome];
+            var filmesArray = filmes.split(';');
+            res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+            res.write("<h2><b>" + nome + "</b></h2>");
+            res.write("<p><b>Filmes: </b></p>");
+            res.write("<ul>");
+            for(i in filmesArray){
+                res.write('<li>' + filmesArray[i] + '</li>');
+            }
+            res.write("</ul>");
+            res.end();
+        } else {
+            res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+            res.write("<p>Pagina nao encontrada</p>");
             res.end();
         }
 }).listen(7777);
