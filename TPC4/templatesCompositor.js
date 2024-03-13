@@ -12,7 +12,7 @@ exports.compositoresPage = (compositores,d) => {
 
                 <header class="w3-container w3-teal">
                     <h1>Compositores
-                    <a class="w3-btn w3-round w3-grey" href="/periodos">+</a>
+                    <a class="w3-btn w3-round w3-grey" href="/compositores/add">+</a>
                     </h1>
                     
                 </header>

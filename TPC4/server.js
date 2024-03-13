@@ -87,7 +87,7 @@ var compositoresServer = http.createServer((req, res) => {
                     })
                 }
 
-                else if(req.url == "/compositores/registo"){
+                else if(req.url == "/compositores/add"){
                     res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'})
                     res.write(templatesCompositor.compositorForm(d))
                     res.end()
@@ -149,6 +149,43 @@ var compositoresServer = http.createServer((req, res) => {
                             res.end();
                         })
                 }
+                else if(/\/periodos\/add$/.test(req.url)){
+                    res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'});
+                    res.write(templatesPeriodo.periodForm(d));
+                    res.end();
+                }
+
+                else if(/\/periodos\/edit\/.+$/.test(req.url)){
+                    res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'});
+                    var idPeriod = req.url.split("/")[3];
+                    axios.get('http://localhost:3000/periodos/'+idPeriod)
+                        .then(response => {
+                            var period = response.data;
+                            res.write(templatesPeriodo.periodFormEdit(period, d));
+                            res.end();
+                        })
+                        .catch(function(erro){
+                            res.write('<p>Não foi possivel obter o periodo...');
+                            res.write('<p>'+erro+'</p>');
+                            res.end();
+                        })
+                    }
+                else if(/\/periodos\/delete\/.+$/.test(req.url)){
+                    var idPeriod = req.url.split("/")[3];
+                    axios.delete('http://localhost:3000/periodos/'+idPeriod)
+                        .then(() => {
+                            res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'});
+                            res.write('<p>Periodo eliminado com sucesso...</p>');
+                            res.write("<p><a href='/periodos'> [Voltar] </a></p>");
+                            res.end();
+                        })
+                        .catch(function(erro){
+                            res.writeHead(501, {'Content-Type': 'text/html; charset=utf-8'});
+                            res.write('<p>Não foi possivel eliminar o periodo...');
+                            res.write('<p>'+erro+'</p>');
+                            res.end();
+                        })
+                    }
                 else{
                     res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'})
                     res.write('<p>Pedido não suportado: '+ req.url + '</p>')
@@ -206,6 +243,59 @@ var compositoresServer = http.createServer((req, res) => {
                         } else {
                             res.writeHead(507, {'Content-Type': 'text/html; charset=utf-8'})
                             res.write('<p>Não foi possivel inserir o compositor...')
+                            res.write('<p>'+erro+'</p>')
+                            res.end()
+                        }
+                    });
+                }
+
+                else if(req.url == "/periodos/add"){
+                    collectRequestBodyData(req, result => {
+                        if (result){
+                            axios.post("http://localhost:3000/periodos/", result)
+                                .then(resp => {
+                                    res.writeHead(200, {'Location': '/periodos/' + result.id})
+                                    res.write("<p>Periodo adicionado com sucesso...</p>")
+                                    res.write("<p><a href='/periodos'> [Voltar] </a></p>")
+                                    res.end()
+                                })
+                                .catch( erro => {
+                                    res.writeHead(506, {'Content-Type': 'text/html; charset=utf-8'})
+                                    res.write('<p>Não foi possivel inserir o periodo...')
+                                    res.write('<p>'+erro+'</p>')
+                                    res.end()
+                                })
+                            
+                        } else {
+                            res.writeHead(507, {'Content-Type': 'text/html; charset=utf-8'})
+                            res.write('<p>Não foi possivel inserir o periodo...')
+                            res.write('<p>'+erro+'</p>')
+                            res.end()
+                        }
+                    });
+                } 
+
+                else if(/\/periodos\/edit\/.+$/.test(req.url)){
+                    var id = req.url.split("/")[3]
+                    collectRequestBodyData(req, result => {
+                        if (result){
+                            axios.put("http://localhost:3000/periodos/" +id, result)
+                                .then(resp => {
+                                    res.writeHead(200, {'Location': '/periodos/' + result.id})
+                                    res.write("<p>Periodo alterado com sucesso...</p>")
+                                    res.write("<p><a href='/periodos'> [Voltar] </a></p>")
+                                    res.end()
+                                })
+                                .catch( erro => {
+                                    res.writeHead(506, {'Content-Type': 'text/html; charset=utf-8'})
+                                    res.write('<p>Não foi possivel inserir o periodo...')
+                                    res.write('<p>'+erro+'</p>')
+                                    res.end()
+                                })
+                            
+                        } else {
+                            res.writeHead(507, {'Content-Type': 'text/html; charset=utf-8'})
+                            res.write('<p>Não foi possivel inserir o periodo...')
                             res.write('<p>'+erro+'</p>')
                             res.end()
                         }
